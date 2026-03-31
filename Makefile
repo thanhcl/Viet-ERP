@@ -2,15 +2,18 @@
 
 ## help - Display all available commands
 help:
-	@echo "ERP Ecosystem - Available Commands"
-	@echo "===================================="
+	@echo "VietERP Platform - Available Commands"
+	@echo "======================================"
 	@echo ""
-	@grep -E '^## ' Makefile | sed 's/^## //' | awk -F' - ' '{printf "  %-20s %s\n", $$1, $$2}'
+	@echo "  NOTE: All commands also work via npm scripts (cross-platform):"
+	@echo "    npm run setup    npm run dev    npm test    npm run build"
+	@echo ""
+	@grep -E '^## ' Makefile | sed 's/^## //' | awk -F' - ' '{printf "  make %-16s %s\n", $$1, $$2}'
 	@echo ""
 
 ## setup - Initialize development environment
 setup:
-	bash scripts/setup.sh
+	node scripts/setup.js
 
 ## dev - Start development server
 dev:
@@ -34,7 +37,7 @@ lint:
 
 ## clean - Remove build artifacts and node_modules
 clean:
-	rm -rf node_modules apps/*/node_modules apps/*/.next apps/*/dist
+	node scripts/clean.js
 
 ## docker-up - Start Docker services
 docker-up:

@@ -9,16 +9,22 @@
   ],
   "scripts": {
     "prepare": "husky",
+    "setup": "node scripts/setup.js",
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:full": "turbo run dev --concurrency=25",
     "lint": "turbo run lint",
     "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e",
     "typecheck": "turbo run typecheck",
-    "clean": "turbo run clean && rm -rf node_modules",
+    "clean": "node scripts/clean.js",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "db:generate": "turbo run db:generate",
     "db:push": "turbo run db:push",
-    "db:seed": "turbo run db:seed"
+    "db:seed": "turbo run db:seed",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "db:migrate": "turbo run db:generate && turbo run db:push"
   },
   "devDependencies": {
     "turbo": "^2.0.0",

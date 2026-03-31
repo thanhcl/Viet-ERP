@@ -26,39 +26,74 @@ VietERP Platform is an open-source community-driven project. We welcome contribu
 
 ### Prerequisites / Yêu cầu
 
-- Node.js 18+
-- npm/yarn
-- PostgreSQL 16+
+- Node.js 20+ (download: https://nodejs.org/)
+- npm 10+
 - Docker & Docker Compose (optional, for local database)
 - Git
 
-### Local Development Setup / Thiết lập Phát triển Cục bộ
+### Quick Setup (Windows, macOS, Linux)
 
 ```bash
 # 1. Fork và clone kho mã nguồn
 git clone https://github.com/YOUR-USERNAME/Viet-ERP.git
 cd Viet-ERP
 
-# 2. Cài đặt dependencies
+# 2. Chạy setup tự động (cross-platform, hoạt động trên mọi OS)
+npm run setup
+```
+
+Script `npm run setup` sẽ tự động: kiểm tra Node/npm/Docker, cài dependencies, tạo `.env`, khởi động Docker, và setup database.
+
+The `npm run setup` script automatically: checks Node/npm/Docker, installs dependencies, creates `.env`, starts Docker, and sets up the database.
+
+### Manual Setup / Thiết lập Thủ công
+
+Nếu `npm run setup` gặp lỗi, bạn có thể chạy từng bước:
+
+If `npm run setup` fails, you can run each step manually:
+
+```bash
+# 1. Cài đặt dependencies
 npm install --legacy-peer-deps
 
-# 3. Sao chép file environment
-cp .env.example .env.local
+# 2. Sao chép file environment
+#    macOS/Linux:
+cp .env.example .env
+#    Windows (PowerShell):
+Copy-Item .env.example .env
 
-# 4. Khởi động PostgreSQL (Docker)
-docker compose up -d postgres
+# 3. Khởi động PostgreSQL (Docker)
+npm run docker:up
 
-# 5. Chạy migrations
-npx prisma migrate deploy
+# 4. Setup database
+npm run db:migrate
 
-# 6. Seed dữ liệu test (optional)
-npx prisma db seed
-
-# 7. Khởi động development server
+# 5. Khởi động development server
 npm run dev
-
-# 8. Mở http://localhost:3000
 ```
+
+### Available Commands / Lệnh Khả dụng
+
+Tất cả lệnh đều dùng `npm` — hoạt động trên **Windows, macOS, Linux** mà không cần cài thêm gì.
+
+All commands use `npm` — works on **Windows, macOS, Linux** without extra tools.
+
+| Lệnh / Command | Mô tả / Description |
+|---|---|
+| `npm run setup` | Setup toàn bộ môi trường / Full environment setup |
+| `npm run dev` | Khởi động dev server / Start dev server |
+| `npm run build` | Build tất cả modules / Build all modules |
+| `npm test` | Chạy unit tests / Run unit tests |
+| `npm run test:e2e` | Chạy E2E tests / Run E2E tests |
+| `npm run lint` | Kiểm tra code / Lint code |
+| `npm run typecheck` | Kiểm tra TypeScript / Type check |
+| `npm run clean` | Xoá build artifacts / Remove build artifacts |
+| `npm run docker:up` | Khởi động Docker services |
+| `npm run docker:down` | Dừng Docker services |
+| `npm run db:migrate` | Chạy database migrations |
+| `npm run db:seed` | Seed dữ liệu mẫu / Seed sample data |
+
+> **Note for macOS/Linux users**: `make` commands are also available (e.g., `make dev`, `make setup`). See `make help` for the full list.
 
 ## Quy trình Đóng góp / Contribution Workflow
 
