@@ -19,9 +19,14 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
+  let session = null;
+  try {
+    session = await auth();
+  } catch {
+    // Auth may fail without DB — allow demo mode
+  }
 
-  if (!session) {
+  if (!session && process.env.NODE_ENV === 'production') {
     redirect("/login");
   }
 
